@@ -1,18 +1,16 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <groupId>com.zdawn</groupId>
   <artifactId>zdawn-commons</artifactId>
-  <version>1.5</version>
+  <version>1.6.0</version>
   <packaging>jar</packaging>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <org.slf4j.version>1.7.12</org.slf4j.version>
+    <org.slf4j.version>1.7.25</org.slf4j.version>
     <org.springframework.version>4.2.6.RELEASE</org.springframework.version>
-    <jackson.version>2.6.1</jackson.version>
-    <aspectj.version>1.7.4</aspectj.version>
-    <c3p0.version>0.9.1</c3p0.version>
+    <jackson.version>2.6.6</jackson.version>
+    <servlet.version>3.0.1</servlet.version>
     <junit.version>4.11</junit.version>
   </properties>
 
@@ -21,12 +19,6 @@
 		<groupId>org.slf4j</groupId>
 		<artifactId>slf4j-api</artifactId>
 		<version>${org.slf4j.version}</version>
-	</dependency>
-	<dependency>
-		<groupId>org.slf4j</groupId>
-		<artifactId>slf4j-log4j12</artifactId>
-		<version>${org.slf4j.version}</version>
-		<scope>runtime</scope>
 	</dependency>
 	<dependency>
 		<groupId>org.springframework</groupId>
@@ -75,43 +67,21 @@
 	<dependency>
 		<groupId>javax.servlet</groupId>
 		<artifactId>javax.servlet-api</artifactId>
-		<version>3.0.1</version>
+		<version>${servlet.version}</version>
 		<scope>provided</scope>
 	</dependency>
-	<dependency>
-		<groupId>c3p0</groupId>
-		<artifactId>c3p0</artifactId>
-		<version>${c3p0.version}</version>
-	</dependency>
-<!-- 	<dependency>
-		<groupId>com.oracle</groupId>
-		<artifactId>ojdbc14</artifactId>
-		<version>10.2.0.4.0</version>
-	</dependency> -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
-	<dependency>
-		<groupId>org.aspectj</groupId>
-		<artifactId>aspectjweaver</artifactId>
-		<version>${aspectj.version}</version>
-		<scope>runtime</scope>
-	</dependency>
-<!-- 	<dependency>
-		<groupId>cglib</groupId>
-		<artifactId>cglib-nodep</artifactId>
-		<version>2.1_3</version>
-	</dependency> -->
   </dependencies>
   <build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
@@ -130,7 +100,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
-				<version>2.8</version>
 				<configuration>
 					<encoding>utf-8</encoding>
 				</configuration>
@@ -143,14 +112,14 @@
 				</includes>
 				<directory>src/main/java</directory>
 			</resource>
-			<!-- <resource>
-				<includes>
-					<include>**/*.xml</include>
-					<include>**/*.properties</include>
-					<include>**/*.ftl</include>
-				</includes>
+			<resource>
+				<excludes>
+					<exclude>**/*.xml</exclude>
+					<exclude>**/*.properties</exclude>
+					<exclude>**/*.ftl</exclude>
+				</excludes>
 				<directory>src/main/resources</directory>
-			</resource> -->
+			</resource>
 		</resources>
 	</build>
 </project>
