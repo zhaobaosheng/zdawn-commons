@@ -50,7 +50,7 @@ public class DefaultSqlSession implements SqlSession {
 	/**
 	 * 每个方法是否自动提交事物
 	 */
-	private boolean antoCommit = false;
+	private boolean autoCommit = false;
 	@Override
 	public Serializable save(String entityName, Map<String, Object> data)
 			throws PersistenceException {
@@ -258,7 +258,7 @@ public class DefaultSqlSession implements SqlSession {
 		try {
 			if(connection!=null){
 				connection.setAutoCommit(commit);
-				antoCommit = commit;
+				autoCommit = commit;
 			}
 		} catch (SQLException e) {
 			log.error("setAutoCommit", e);
@@ -267,12 +267,12 @@ public class DefaultSqlSession implements SqlSession {
 
 	@Override
 	public boolean isAutoCommit() {
-		return antoCommit;
+		return autoCommit;
 	}
 
 	@Override
 	public void commit() {
-		if(antoCommit) throw new UnsupportedOperationException("every operation auto commit transaction");
+		if(autoCommit) throw new UnsupportedOperationException("every operation auto commit transaction");
 		try {
 			if(connection!=null){
 				connection.commit();
@@ -284,7 +284,7 @@ public class DefaultSqlSession implements SqlSession {
 
 	@Override
 	public void rollback() {
-		if(antoCommit) throw new UnsupportedOperationException("every operation auto commit transaction");
+		if(autoCommit) throw new UnsupportedOperationException("every operation auto commit transaction");
 		try {
 			if(connection!=null){
 				connection.rollback();
@@ -298,7 +298,7 @@ public class DefaultSqlSession implements SqlSession {
 	public void close() {
 		try {
 			if(connection!=null){
-				if(antoCommit) connection.setAutoCommit(true);
+				if(autoCommit) connection.setAutoCommit(true);
 				connection.close();
 			}
 			sysModel = null;

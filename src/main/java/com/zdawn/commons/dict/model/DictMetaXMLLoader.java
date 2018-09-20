@@ -1,6 +1,7 @@
 package com.zdawn.commons.dict.model;
 
 import java.io.File;
+import java.io.InputStream;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -10,19 +11,29 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
 public class DictMetaXMLLoader {
 	private final Logger log = LoggerFactory.getLogger(DictMetaXMLLoader.class);
 	public MetaDictSet loadFromXML(String filePath) {
 		//文件路径
 		File xmlfile = new File(filePath);
-		if (!xmlfile.exists()) return null;
+		if (!xmlfile.exists()) throw new RuntimeException(filePath+" file not found");
+		InputSource in = new InputSource(xmlfile.toURI().toASCIIString());
+		return loadFromXML(in);
+	}
+	public MetaDictSet loadFromXML(InputStream is){
+		if(is==null) throw new RuntimeException("InputStream is null");
+		InputSource in = new InputSource(is);
+		return loadFromXML(in);
+	}
+	public MetaDictSet loadFromXML(InputSource in) {
 		MetaDictSet dictSet = new MetaDictSet();
 		//创建装载xml对象
 		DocumentBuilderFactory domfactory = DocumentBuilderFactory.newInstance();
 		try {
 			DocumentBuilder builder = domfactory.newDocumentBuilder();
-			Document document = builder.parse(xmlfile);
+			Document document = builder.parse(in);
 			NodeList dictList = document.getElementsByTagName("DataDictionary");
 			//read DataDictionary element 
 			readDataDictionary(dictList,dictSet);

@@ -1,6 +1,7 @@
 package com.zdawn.commons.sysmodel.metaservice;
 
 import java.io.File;
+import java.io.InputStream;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
 import com.zdawn.commons.sysmodel.metaservice.impl.EntityImpl;
 import com.zdawn.commons.sysmodel.metaservice.impl.PropertyImpl;
@@ -25,22 +27,32 @@ import com.zdawn.util.convert.ConvertUtil;
  *
  */
 public class SysModelXMLLoader {
-	private final Logger log = LoggerFactory.getLogger(SysModelXMLLoader.class);
+	private static final Logger log = LoggerFactory.getLogger(SysModelXMLLoader.class);
 	
 	public SysModel loadFromXML(String filePath) {
 		//文件路径
 		File xmlfile = new File(filePath);
-		if (!xmlfile.exists()) return null;
+		if (!xmlfile.exists()) throw new RuntimeException(filePath+" file not found");
 		return loadFromXML(xmlfile);
 	}
 	public SysModel loadFromXML(File file) {
+		if(file==null) throw new RuntimeException("file is null");
+		log.info("load sysmodel xml="+file.getAbsolutePath());
+		InputSource in = new InputSource(file.toURI().toASCIIString());
+		return loadFromXML(in);
+	}
+	public SysModel loadFromXML(InputStream is) {
+		if(is==null) throw new RuntimeException("InputStream is null");
+		InputSource in = new InputSource(is);
+		return loadFromXML(in);
+	}
+	public SysModel loadFromXML(InputSource in) {
 		SysModelImpl sysModel = new SysModelImpl();
 		//创建装载xml对象
 		DocumentBuilderFactory domfactory = DocumentBuilderFactory.newInstance();
 		try {
-			log.info("load sysmodel xml="+file.getAbsolutePath());
 			DocumentBuilder builder = domfactory.newDocumentBuilder();
-			Document document = builder.parse(file);
+			Document document = builder.parse(in);
 			//read version
 			NodeList version = document.getElementsByTagName("version");
 			if(version.getLength()==1){
@@ -59,7 +71,6 @@ public class SysModelXMLLoader {
 		}
 		return sysModel;
 	}
-
 	private void readEntity(NodeList resultList, SysModelImpl sysModel) {
 		if(resultList==null) return ;
 		for (int i = 0; i < resultList.getLength(); i++) {

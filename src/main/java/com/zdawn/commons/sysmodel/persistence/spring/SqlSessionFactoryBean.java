@@ -41,7 +41,7 @@ public class SqlSessionFactoryBean implements FactoryBean <SqlSessionFactory>,In
 	
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		ModelFactory.loadQueryConfigFromClassPathByRegexFileName(regexDataModelFileName);
+		ModelFactory.loadDataModelFromClassPathByRegexFileName(regexDataModelFileName);
 		sysModel = ModelFactory.getSysModel();
 		sqlSessionFactory = new DefaultSqlSessionFactory(executor, sysModel, dataSource);
 	}
