@@ -4,7 +4,33 @@
   <artifactId>zdawn-commons</artifactId>
   <version>1.6.0</version>
   <packaging>jar</packaging>
+  
+  <name>zdawn-commons</name>
+  <url>https://github.com/zhaobaosheng/zdawn-common</url>
+  <description>the main functions of zdawn-commons  project include simple orm,common query using jdbc,utility class etc</description>
+  
+  <licenses>
+      <license>
+          <name>The Apache Software License, Version 2.0</name>
+          <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+          <distribution>repo</distribution>
+      </license>
+  </licenses>
 
+  <scm>
+      <url>https://github.com/zhaobaosheng/zdawn-commons</url>
+      <connection>scm:git:https://github.com/zhaobaosheng/zdawn-commons.git</connection>
+      <developerConnection>scm:git:https://github.com/zhaobaosheng/zdawn-commons.git</developerConnection>
+      <tag>zdawn-commons-1.6.0</tag>
+  </scm>
+
+  <developers>
+      <developer>
+          <name>zhaobaosheng</name>
+          <email>nbs_nbs_nbs@163.com</email>
+      </developer>
+  </developers>
+  
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <org.slf4j.version>1.7.25</org.slf4j.version>
@@ -14,6 +40,17 @@
     <junit.version>4.11</junit.version>
   </properties>
 
+  <distributionManagement>
+      <snapshotRepository>
+          <id>oss</id>
+          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+      </snapshotRepository>
+      <repository>
+          <id>oss</id>
+          <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+      </repository>
+  </distributionManagement>
+    
   <dependencies>
  	<dependency>
 		<groupId>org.slf4j</groupId>
@@ -116,6 +153,36 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <failOnError>false</failOnError>
+                    <doclint>none</doclint>
+                </configuration>
+              <executions>
+                <execution>
+                  <id>attach-javadocs</id>
+                  <goals>
+                    <goal>jar</goal>
+                  </goals>
+                <phase>package</phase>
+                </execution>
+              </executions>
+            </plugin>
+			<plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-gpg-plugin</artifactId>
+               <executions>
+                   <execution>
+                       <id>sign-artifacts</id>
+                       <phase>verify</phase>
+                       <goals>
+                           <goal>sign</goal>
+                       </goals>
+                   </execution>
+               </executions>
+            </plugin>
 		</plugins>
 		<resources>
 			<resource>
