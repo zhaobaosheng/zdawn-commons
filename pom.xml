@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.zdawn</groupId>
   <artifactId>zdawn-commons</artifactId>
-  <version>1.6.0</version>
+  <version>1.7.0</version>
   <packaging>jar</packaging>
   
   <name>zdawn-commons</name>
@@ -21,7 +21,7 @@
       <url>https://github.com/zhaobaosheng/zdawn-commons</url>
       <connection>scm:git:https://github.com/zhaobaosheng/zdawn-commons.git</connection>
       <developerConnection>scm:git:https://github.com/zhaobaosheng/zdawn-commons.git</developerConnection>
-      <tag>zdawn-commons-1.6.0</tag>
+      <tag>zdawn-commons-1.7.0</tag>
   </scm>
 
   <developers>
@@ -33,9 +33,9 @@
   
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <org.slf4j.version>1.7.25</org.slf4j.version>
+    <org.slf4j.version>1.7.30</org.slf4j.version>
     <org.springframework.version>4.2.6.RELEASE</org.springframework.version>
-    <jackson.version>2.6.6</jackson.version>
+    <jackson.version>2.11.4</jackson.version>
     <servlet.version>3.0.1</servlet.version>
     <junit.version>4.11</junit.version>
   </properties>
@@ -70,11 +70,11 @@
 			 -->
 		</exclusions>
 	</dependency>
-	<dependency>
+<!-- 	<dependency>
 		<groupId>org.springframework</groupId>
 		<artifactId>spring-webmvc</artifactId>
 		<version>${org.springframework.version}</version>
-	</dependency>
+	</dependency> -->
 	<dependency>
 		<groupId>org.springframework</groupId>
 		<artifactId>spring-aop</artifactId>
