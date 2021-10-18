@@ -5,8 +5,8 @@ import java.io.Serializable;
 public class ResponseMessage implements Serializable {
 	private static final long serialVersionUID = 1135623201756577996L;
 	private boolean result ;
-	private String desc = "";
-	private String errorCode = "";
+	private String desc;
+	private String errorCode;
 	private Object data = null;
 
 	public boolean isResult() {
