@@ -75,6 +75,17 @@ public class MetaQueryFactory {
 	public static synchronized void loadQueryConfigFromClassPath(String fileName){
 		metaQuery = loadFromInputStream(fileName);
 	}
+	
+	public static synchronized void loadQueryConfigsFromClassPath(String... fileNames){
+		if(fileNames==null) return ;
+		if(metaQuery==null) metaQuery = new MetaQuery();
+		for (String one : fileNames) {
+			MetaQuery tmp = loadFromInputStream(one);
+			if(tmp==null) continue;
+			metaQuery.getResultMappers().putAll(tmp.getResultMappers());
+			metaQuery.getQueryConfigs().putAll(tmp.getQueryConfigs());
+		}
+	}
 	/**
 	 * 使用正则表达式从classpath装载查询定义
 	 * @param regexFileName 文件名正则表达式
