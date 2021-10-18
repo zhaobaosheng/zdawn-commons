@@ -66,6 +66,9 @@ public class QueryExecutor {
 	public QueryExecutor(PagingSqlDecorator pagingSqlDecorator){
 		this(null,pagingSqlDecorator);
 	}
+	
+	public QueryExecutor() {
+	}
 
 	public List<Map<String, String>> queryStringMapData(Connection connection,String code,
 			Map<String, Object> para) throws Exception {
@@ -552,5 +555,7 @@ public class QueryExecutor {
 	public void setPagingSqlDecorator(PagingSqlDecorator pagingSqlDecorator) {
 		this.pagingSqlDecorator = pagingSqlDecorator;
 	}
-
+	public void setMetaQuery(MetaQuery metaQuery) {
+		this.metaQuery = metaQuery;
+	}
 }
