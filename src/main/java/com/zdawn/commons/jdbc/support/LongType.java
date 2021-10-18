@@ -8,11 +8,15 @@ import java.sql.Types;
 public class LongType extends AbstractType {
 
 	public Object get(ResultSet rs, String name) throws SQLException {
-		return rs.getLong(name);
+		Long value = rs.getLong(name);
+		if(rs.wasNull()) value = null;
+		return value;
 	}
 
 	public Object get(ResultSet rs, int index) throws SQLException {
-		return rs.getLong(index);
+		Long value = rs.getLong(index);
+		if(rs.wasNull()) value = null;
+		return value;
 	}
 
 	public void set(PreparedStatement ps, Object value, int index)

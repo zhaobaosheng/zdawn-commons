@@ -8,11 +8,15 @@ import java.sql.Types;
 public class IntegerType extends AbstractType {
 
 	public Object get(ResultSet rs, String name) throws SQLException {
-		return rs.getInt(name);
+		Integer value = rs.getInt(name);
+		if(rs.wasNull()) value = null;
+		return value;
 	}
 
 	public Object get(ResultSet rs, int index) throws SQLException {
-		return rs.getInt(index);
+		Integer value = rs.getInt(index);
+		if(rs.wasNull()) value = null;
+		return value;
 	}
 
 	public void set(PreparedStatement ps, Object value, int index)
