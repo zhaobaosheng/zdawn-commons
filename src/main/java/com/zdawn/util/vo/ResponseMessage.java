@@ -4,15 +4,15 @@ import java.io.Serializable;
 
 public class ResponseMessage implements Serializable {
 	private static final long serialVersionUID = 1135623201756577996L;
-	private String result = "";
+	private boolean result ;
 	private String desc = "";
 	private String errorCode = "";
 	private Object data = null;
 
-	public String getResult() {
+	public boolean isResult() {
 		return result;
 	}
-	public void setResult(String result) {
+	public void setResult(boolean result) {
 		this.result = result;
 	}
 	public String getDesc() {
