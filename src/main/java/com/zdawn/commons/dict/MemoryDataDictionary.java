@@ -11,7 +11,6 @@ import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
 
 import com.zdawn.commons.dict.model.DataField;
 import com.zdawn.commons.dict.model.DictData;
@@ -22,11 +21,9 @@ import com.zdawn.commons.jdbc.JdbcUtils;
 
 /**
  * 将数据字典数据缓存在内存中 <br>
- * 根据com.sinosoft.ie.dhow.core.general.dict.model.MetaDict.cacheType属性判断是否缓存
- * 
- * @author zhaobs
+ * 根据MetaDict.cacheType属性判断是否缓存
  */
-public class MemoryDataDictionary implements DataDictionary,InitializingBean {
+public class MemoryDataDictionary implements DataDictionary {
 	private Logger log = LoggerFactory.getLogger(MemoryDataDictionary.class);
 	// 缓存
 	private Map<String, DictData> ddCache = new HashMap<String, DictData>();
@@ -203,10 +200,18 @@ public class MemoryDataDictionary implements DataDictionary,InitializingBean {
 	public void setMetaFileName(String metaFileName) {
 		this.metaFileName = metaFileName;
 	}
-
-	@Override
-	public void afterPropertiesSet() throws Exception {
-		initDicData();
-	}
-	
+	/**
+	 * 清除缓存
+	 * <br>bmNames 编码数据字典名子集合
+	 * <br>如果为null 清除全部缓存
+	 */
+	public void clearCache(String ...bmNames) {
+		if(bmNames==null) {
+			ddCache.clear();
+		}else {
+			for (String bm : bmNames) {
+				ddCache.remove(bm);
+			}
+		}
+	}	
 }

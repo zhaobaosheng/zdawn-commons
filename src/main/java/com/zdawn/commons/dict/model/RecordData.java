@@ -25,4 +25,8 @@ public class RecordData {
 	public Collection<Object> getAllRecordData(){
 	    return values.values();
 	}
+	
+	public Map<String, Object> getAllData(){
+		return values;
+	}
 }
