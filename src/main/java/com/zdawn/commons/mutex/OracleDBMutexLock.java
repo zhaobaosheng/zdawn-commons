@@ -75,6 +75,8 @@ public class OracleDBMutexLock {
 		ResultSet rs = null;
 		try {
 			con = dataSource.getConnection();
+			//开启事务
+			con.setAutoCommit(false);
 			pstmt =con.prepareStatement(selectLockSql);
 			pstmt.setString(1, lockName);
 			rs = pstmt.executeQuery();
@@ -101,7 +103,7 @@ public class OracleDBMutexLock {
 				updateStmt.executeUpdate();
 				result = true;
 			}
-			if(con!=null) con.commit();
+			con.commit();
 		} catch (SQLException e) {
 			if(con!=null) con.rollback();
 			log.error("queryAndLocked",e);
@@ -113,6 +115,7 @@ public class OracleDBMutexLock {
 			closeStatement(updateStmt);
 			closeResultSet(rs);
 			closeStatement(pstmt);
+			setAutoCommit(con);
 			closeConnection(con);
 		}
 		return result;
@@ -185,6 +188,13 @@ public class OracleDBMutexLock {
 			if(connection !=null) connection.close();
 		} catch (Exception e) {
 			log.error("closeConnection",e);
+		}
+	}
+	private void setAutoCommit(Connection connection){
+		try {
+			connection.setAutoCommit(true);
+		} catch (SQLException e) {
+			log.error("autoCommit",e);
 		}
 	}
 }
